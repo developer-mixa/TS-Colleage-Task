@@ -6,6 +6,7 @@ import styles from './ServicePage.module.css';
 type Service = {
   id: number;
   name: string;
+  image: string;
   description: string;
   createdAt: string;
   imageUrl: string;
@@ -51,6 +52,7 @@ function ServicesPage() {
         {services.map((service) => (
             <Card className={styles.serviceCard}>
               <div className={styles.newsItem}>
+              <img src={service.image} alt={service.name} className={styles.newsItemImage} />
               <h3 className={styles.newsItemTitle}>{service.name}</h3>
               <p className={styles.newsItemDescription}>{service.description}</p>
               <div className={styles.newsItemDate}>Дата публикации: {service.createdAt}</div>
