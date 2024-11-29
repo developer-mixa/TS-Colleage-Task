@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Card } from '@consta/uikit/Card';
 import { Grid } from '@consta/uikit/Grid';
 import styles from './ServicePage.module.css';
