@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { List } from '@consta/uikit/ListCanary';
 import { Card } from '@consta/uikit/Card';
 import styles from './MainPage.module.css'
