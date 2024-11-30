@@ -3,11 +3,13 @@ import MainPage from '../../pages/main-page/MainPage'
 import ServicePage from '../../pages/service-page/ServicePage'
 import NotFound from '../../pages/not-found-page/not_found'
 import LoginPage from '../../pages/login-page/LoginPage'
+import NavigationBar from '../NavigationBar'
 
 function App() {
   return (
     <>
     <BrowserRouter>
+    <NavigationBar/>
       <Routes>
         <Route path='/' element= { <MainPage/> } />
         <Route path='/services' element = { <ServicePage/> } />
