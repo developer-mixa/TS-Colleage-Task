@@ -3,6 +3,7 @@ import MainPage from '../../pages/main-page/MainPage'
 import ServicePage from '../../pages/service-page/ServicePage'
 import NotFound from '../../pages/not-found-page/not_found'
 import LoginPage from '../../pages/login-page/LoginPage'
+import ServiceDetailPage from '../../pages/service-detail-page/ServiceDetailPage'
 import NavigationBar from '../NavigationBar'
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
         <Route path='/' element= { <MainPage/> } />
         <Route path='/services' element = { <ServicePage/> } />
         <Route path='/login' element = { <LoginPage/> } />
+        <Route path='/services/:id' element = { <ServiceDetailPage/> } />
         <Route path='*' element={ <NotFound/> } />
       </Routes>
     </BrowserRouter>

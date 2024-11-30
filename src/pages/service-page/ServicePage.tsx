@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Card } from '@consta/uikit/Card';
 import { Grid } from '@consta/uikit/Grid';
+import { Link } from 'react-router-dom';
 import styles from './ServicePage.module.css';
 
 type Service = {
@@ -50,14 +51,19 @@ function ServicesPage() {
       <h1 className={styles.servicesTitle}>Услуги</h1>
       <Grid cols={3} className={styles.Grid}>
         {services.map((service) => (
-            <Card className={styles.serviceCard}>
-              <div className={styles.newsItem}>
-              <img src={service.image} alt={service.name} className={styles.newsItemImage} />
-              <h3 className={styles.newsItemTitle}>{service.name}</h3>
-              <p className={styles.newsItemDescription}>{service.description}</p>
-              <div className={styles.newsItemDate}>Дата публикации: {service.createdAt}</div>
-            </div>
-            </Card>
+              <Link 
+              key={service.id}
+              to={`/services/${service.id}`}
+            >
+              <Card className={styles.serviceCard}>
+                <div className={styles.newsItem}>
+                <img src={service.image} alt={service.name} className={styles.newsItemImage} />
+                <h3 className={styles.newsItemTitle}>{service.name}</h3>
+                <p className={styles.newsItemDescription}>{service.description}</p>
+                <div className={styles.newsItemDate}>Дата публикации: {service.createdAt}</div>
+              </div>
+              </Card>
+            </Link>
         ))}
       </Grid>
     </>
