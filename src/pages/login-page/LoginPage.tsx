@@ -2,50 +2,74 @@ import React, { useState } from 'react';
 import styles from './LoginPage.module.css';
 import { Button } from '@consta/uikit/Button';
 
-
 function LoginPage() {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({
-    email: '',
+    username: '',
     password: ''
   });
-  const validateEmail = (email: string) => {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-  };
 
   const validatePassword = (password: string) => {
-    return password.length >= 6 && /[a-zA-Z]/.test(password) && /\d/.test(password);
+    return password.length >= 6 && /[a-zA-Z]/.test(password);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrors({
-      email: '',
+      username: '',
       password: ''
     });
-
-    if (!validateEmail(email)) {
-      setErrors(prev => ({ ...prev, email: 'Некорректный email' }));
-      return;
-    }
 
     if (!validatePassword(password)) {
       setErrors(prev => ({ ...prev, password: 'Пароль должен содержать минимум одну букву и цифру' }));
       return;
     }
 
+    try {
+      const response = await fetch('https://dummyjson.com/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username: username, password }),
+      });
 
-    // Succes login
+      if (!response.ok) {
+        const errorData = await response.json();
+        let errorMessage = 'Не удалось войти. Проверьте данные и попробуйте снова.';
+        
+        if (errorData.errors && Array.isArray(errorData.errors)) {
+          errorMessage = errorData.errors[0].message || errorMessage;
+        }
+
+        throw new Error(errorMessage);
+      }
+
+      const data = await response.json();
+
+      localStorage.setItem('accessToken', data.accessToken);
+      localStorage.setItem('refreshToken', data.refreshToken);
+
+      setUsername('');
+      setPassword('');
+      console.log('Авторизация успешна');
+    } catch (error) {
+      console.error('Произошла ошибка:', error);
+      handleError('Не удалось войти. Проверьте данные и попробуйте снова.');
+    }
+  };
+
+  const handleError = (error: string) => {
+    setErrors(prev => ({ ...prev, password: error }));
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     switch (name) {
-      case 'email':
-        setEmail(value);
+      case 'username':
+        setUsername(value);
         break;
       case 'password':
         setPassword(value);
@@ -55,34 +79,26 @@ function LoginPage() {
     }
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      // Test
-    }
-  };
-
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Вход в систему</h2>
       <form onSubmit={handleSubmit} className={styles.form}>
         <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={email}
+          type="text"
+          name="username"
+          placeholder="Username"
+          value={username}
           onChange={handleInputChange}
-          onKeyUp={handleKeyPress}
           className={styles.input}
           required
         />
-        {errors.email && <p className={styles.error}>{errors.email}</p>}
+        {errors.username && <p className={styles.error}>{errors.username}</p>}
         <input
           type="password"
           name="password"
           placeholder="Пароль"
           value={password}
           onChange={handleInputChange}
-          onKeyUp={handleKeyPress}
           className={styles.input}
           required
         />
