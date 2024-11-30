@@ -16,13 +16,13 @@
     color: #333;
     text-decoration: none;
     font-weight: bold;
-    transition: all 0.3s ease; /* Добавляем плавный переход */
+    transition: all 0.3s ease;
   }
   
   .link:hover,
   .link.active {
     text-decoration: underline;
-    color: #007bff; /* Цвет текста при активном маршруте */
+    color: #007bff;
   }
   
   .rightSection {
