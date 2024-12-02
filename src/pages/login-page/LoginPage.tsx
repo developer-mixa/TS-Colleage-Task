@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import styles from './LoginPage.module.css';
 import { Button } from '@consta/uikit/Button';
+import { Navigate, redirect, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { login } from '../../store';
 
 function LoginPage() {
+  let dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({
@@ -50,10 +56,12 @@ function LoginPage() {
 
       localStorage.setItem('accessToken', data.accessToken);
       localStorage.setItem('refreshToken', data.refreshToken);
+      dispatch(login());
 
       setUsername('');
       setPassword('');
       console.log('Авторизация успешна');
+      navigate('/');
     } catch (error) {
       console.error('Произошла ошибка:', error);
       handleError('Не удалось войти. Проверьте данные и попробуйте снова.');

@@ -1,7 +1,12 @@
-import { Link } from 'react-router-dom';
+import { Link, redirect } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './NavigationBar.module.css';
+import { login, logout, selectIsAuth } from '../store';
 
 const NavigationBar = () => {
+  const isAuthenticated = useSelector(selectIsAuth);
+  const dispatch = useDispatch();
+
   return (
     <div className={styles.toolbar}>
       <div className={styles.leftSection}>
@@ -9,10 +14,18 @@ const NavigationBar = () => {
         <Link to="/services" className={styles.link}>Услуги компании</Link>
       </div>
       <div className={styles.rightSection}>
-        <div className={styles.userInfo}>
-          <span className={styles.userName}>ФИО</span>
-          <button className={styles.loginButton}>Вход</button>
-        </div>
+        {isAuthenticated ? (
+          <>
+            <div className={styles.userInfo}>
+              <span className={styles.userName}>ФИО</span>
+            </div>
+            <button className={styles.logoutButton} onClick={() => dispatch(logout())}>Выйти</button>
+          </>
+        ) : (
+          <div className={styles.loginButton}>
+            <button className={styles.loginButton} onClick={() => redirect('/login')}>Войти</button>
+          </div>
+        )}
       </div>
     </div>
   );
