@@ -17,6 +17,8 @@ const authSlice = createSlice({
 
 const store = configureStore({reducer: authSlice.reducer })
 
+export const { login, logout } = authSlice.actions;
+
 export const selectIsAuth = () => store.getState().value;
 
 export default store
