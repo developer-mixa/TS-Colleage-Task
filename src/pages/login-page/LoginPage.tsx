@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './LoginPage.module.css';
 import { Button } from '@consta/uikit/Button';
-import { Navigate, redirect, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { login } from '../../store';
 
