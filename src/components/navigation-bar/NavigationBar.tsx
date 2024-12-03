@@ -10,6 +10,7 @@ interface User {
   email: string;
   firstName: string;
   lastName: string;
+  maidenName: string;
   gender: string;
   image: string;
 }
@@ -57,7 +58,7 @@ const NavigationBar = () => {
           <>
             {user && (
               <button className={styles.profileButton} onClick={() => navigate('/profile')}>
-                {user.firstName} {user.lastName}
+                {user.firstName} {user.lastName} {user.maidenName}
               </button>
             )}
             <button className={styles.logoutButton} onClick={() => dispatch(logout())}>Выйти</button>
