@@ -45,7 +45,7 @@ const NavigationBar = () => {
     };
 
     fetchUser();
-  }, []);
+  }, [isAuthenticated]);
 
   return (
     <div className={styles.toolbar}>
