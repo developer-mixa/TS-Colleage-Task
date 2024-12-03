@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './NavigationBar.module.css';
-import { logout, selectIsAuth } from '../store';
+import { logout, selectIsAuth } from '../../store';
 
 const NavigationBar = () => {
   const isAuthenticated = useSelector(selectIsAuth);
