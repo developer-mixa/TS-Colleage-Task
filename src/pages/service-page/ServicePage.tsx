@@ -3,6 +3,7 @@ import { Card } from '@consta/uikit/Card';
 import { Grid } from '@consta/uikit/Grid';
 import { Link } from 'react-router-dom';
 import styles from './ServicePage.module.css';
+import ServiceApi from '../../api/ServiceApi';
 
 type Service = {
   id: number;
@@ -13,6 +14,8 @@ type Service = {
   imageUrl: string;
 };
 
+let serviceApi = new ServiceApi()
+
 function ServicesPage() {
   const [services, setServices] = useState<Service[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -21,7 +24,7 @@ function ServicesPage() {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await fetch('https://673423afa042ab85d1190055.mockapi.io/api/v1/services');
+        const response = await serviceApi.getServices();
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

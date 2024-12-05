@@ -4,6 +4,9 @@ import { Button } from '@consta/uikit/Button';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { login } from '../../store';
+import UsersApi from '../../api/UsersApi';
+
+let usersApi = new UsersApi();
 
 function LoginPage() {
   let dispatch = useDispatch();
@@ -33,13 +36,7 @@ function LoginPage() {
     }
 
     try {
-      const response = await fetch('https://dummyjson.com/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username: username, password }),
-      });
+      const response = await usersApi.login(username, password);
 
       if (!response.ok) {
         const errorData = await response.json();

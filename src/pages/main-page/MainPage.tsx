@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import { List } from '@consta/uikit/ListCanary';
 import { Card } from '@consta/uikit/Card';
 import styles from './MainPage.module.css'
-
-const NEWS_URL: string = 'https://673423afa042ab85d1190055.mockapi.io/api/v1/main';
+import NewsApi from '../../api/NewsApi';
 
 type Item = {
   label: string;
@@ -13,6 +12,8 @@ type Item = {
   id: number;
 };
 
+let newsApi = new NewsApi();
+
 function MainPage() {
   const [items, setItems] = useState<Item[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -21,7 +22,8 @@ function MainPage() {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch(NEWS_URL);
+        
+        const response = await newsApi.getNews();
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
